@@ -1,13 +1,14 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 
+import ThemedText from "@/components/ThemedText";
 import { globalStyles } from "@/styles/global-styles";
 
 const CalculatorApp = () => {
   return (
     <View style={globalStyles.calculatorContainer}>
-      <Text style={globalStyles.mainResult}>50 x 50</Text>
+      <ThemedText variant="main">50 x 50</ThemedText>
 
-      <Text style={globalStyles.subResult}>2500</Text>
+      <ThemedText variant="sub">2500</ThemedText>
     </View>
   );
 };
