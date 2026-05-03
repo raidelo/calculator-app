@@ -35,7 +35,7 @@ const CalculatorApp = () => {
             backgroundColor={Colors.lightGray}
             blackText
           />
-          <CalculatorButton label="%" backgroundColor={Colors.orange} />
+          <CalculatorButton label="÷" backgroundColor={Colors.orange} />
         </ButtonRow>
 
         <ButtonRow>
