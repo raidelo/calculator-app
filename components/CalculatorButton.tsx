@@ -2,29 +2,35 @@ import { Pressable, Text } from "react-native";
 
 import { globalStyles } from "@/styles/global-styles";
 import { Colors } from "@/constants/theme";
+import {
+  BUTTON_ASPECT_RATIO,
+  BUTTON_DEFAULT_FLEX,
+  BUTTON_GAP,
+  BUTTON_MAX_RADIUS,
+} from "@/constants/button";
 
 type Props = {
   label: string;
+  size?: number;
   backgroundColor?: string;
   blackText?: boolean;
-  doubleSize?: boolean;
 };
 
 export default function CalculatorButton({
   label,
+  size = BUTTON_DEFAULT_FLEX,
   backgroundColor = Colors.darkGray,
   blackText = false,
-  doubleSize = false,
 }: Props) {
   return (
     <Pressable
       style={({ pressed }) => ({
         ...globalStyles.button,
+        maxWidth: BUTTON_MAX_RADIUS * size + BUTTON_GAP * (size - 1),
+        maxHeight: BUTTON_MAX_RADIUS,
+        borderRadius: BUTTON_MAX_RADIUS / 2,
+        aspectRatio: BUTTON_ASPECT_RATIO * size,
         backgroundColor: backgroundColor,
-        width: doubleSize
-          ? globalStyles.button.width * 2 +
-            globalStyles.button.marginHorizontal * 2
-          : globalStyles.button.width,
         opacity: pressed ? 0.8 : 1,
       })}
     >

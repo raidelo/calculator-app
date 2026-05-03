@@ -1,15 +1,10 @@
 import { StyleSheet } from "react-native";
 
 import { Colors } from "@/constants/theme";
+import { BUTTON_DEFAULT_FLEX, BUTTON_GAP } from "@/constants/button";
 
 export const globalStyles = StyleSheet.create({
   background: { flex: 1, backgroundColor: Colors.background },
-
-  calculatorContainer: {
-    flex: 1,
-    justifyContent: "flex-end",
-    paddingBottom: 40,
-  },
 
   mainResult: {
     color: Colors.textPrimary,
@@ -25,25 +20,23 @@ export const globalStyles = StyleSheet.create({
     fontWeight: 300,
   },
 
-  row: {
-    flexDirection: "row",
-    justifyContent: "center",
-    paddingHorizontal: 10,
-    marginBottom: 12,
+  calculatorContainer: {
+    flex: 1,
   },
 
+  textContainer: { flex: 1, justifyContent: "flex-end" },
+
+  buttonsContainer: { flex: 2, gap: BUTTON_GAP, justifyContent: "flex-end" },
+
+  row: { flexDirection: "row", gap: BUTTON_GAP, justifyContent: "center" },
+
   button: {
-    width: 74,
-    height: 74,
-    borderRadius: 37,
-    backgroundColor: Colors.darkGray,
+    flex: BUTTON_DEFAULT_FLEX,
     justifyContent: "center",
-    marginHorizontal: 6,
+    alignItems: "center",
   },
 
   buttonText: {
-    textAlign: "center",
-    padding: 10,
     fontSize: 30,
     color: "white",
     fontWeight: 300,
