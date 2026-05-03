@@ -14,6 +14,7 @@ type Props = {
   size?: number;
   backgroundColor?: string;
   blackText?: boolean;
+  onPress?: () => void;
 };
 
 export default function CalculatorButton({
@@ -21,6 +22,7 @@ export default function CalculatorButton({
   size = BUTTON_DEFAULT_FLEX,
   backgroundColor = Colors.darkGray,
   blackText = false,
+  onPress,
 }: Props) {
   return (
     <Pressable
@@ -33,6 +35,13 @@ export default function CalculatorButton({
         backgroundColor: backgroundColor,
         opacity: pressed ? 0.8 : 1,
       })}
+      onPress={
+        onPress
+          ? () => {
+              onPress();
+            }
+          : undefined
+      }
     >
       <Text
         style={{
