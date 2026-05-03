@@ -1,5 +1,7 @@
 import { Pressable, Text } from "react-native";
 
+import * as Haptics from "expo-haptics";
+
 import { globalStyles } from "@/styles/global-styles";
 import { Colors } from "@/constants/theme";
 import {
@@ -22,7 +24,7 @@ export default function CalculatorButton({
   size = BUTTON_DEFAULT_FLEX,
   backgroundColor = Colors.darkGray,
   blackText = false,
-  onPress,
+  onPress = () => {},
 }: Props) {
   return (
     <Pressable
@@ -38,6 +40,8 @@ export default function CalculatorButton({
       onPress={
         onPress
           ? () => {
+              Haptics.selectionAsync();
+
               onPress();
             }
           : undefined
