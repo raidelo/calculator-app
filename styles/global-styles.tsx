@@ -24,4 +24,29 @@ export const globalStyles = StyleSheet.create({
     textAlign: "right",
     fontWeight: 300,
   },
+
+  row: {
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingHorizontal: 10,
+    marginBottom: 12,
+  },
+
+  button: {
+    width: 74,
+    height: 74,
+    borderRadius: 37,
+    backgroundColor: Colors.darkGray,
+    justifyContent: "center",
+    marginHorizontal: 6,
+  },
+
+  buttonText: {
+    textAlign: "center",
+    padding: 10,
+    fontSize: 30,
+    color: "white",
+    fontWeight: 300,
+    fontFamily: "JetBrainsMono",
+  },
 });
