@@ -15,7 +15,6 @@ export const globalStyles = StyleSheet.create({
     color: Colors.textPrimary,
     fontSize: 60,
     textAlign: "right",
-    paddingRight: 20,
     fontWeight: 400,
   },
 
@@ -23,7 +22,6 @@ export const globalStyles = StyleSheet.create({
     color: Colors.textSecondary,
     fontSize: 35,
     textAlign: "right",
-    paddingRight: 20,
     fontWeight: 300,
   },
 });

@@ -6,9 +6,11 @@ import { globalStyles } from "@/styles/global-styles";
 const CalculatorApp = () => {
   return (
     <View style={globalStyles.calculatorContainer}>
-      <ThemedText variant="main">50 x 50</ThemedText>
+      <View style={{ paddingHorizontal: 20, paddingBottom: 20 }}>
+        <ThemedText variant="main">50 x 50</ThemedText>
 
-      <ThemedText variant="sub">2500</ThemedText>
+        <ThemedText variant="sub">2500</ThemedText>
+      </View>
     </View>
   );
 };
