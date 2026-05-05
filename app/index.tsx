@@ -1,10 +1,10 @@
 import { View } from "react-native";
 
-import ThemedText from "@/components/ThemedText";
-import { globalStyles } from "@/styles/global-styles";
-import CalculatorButton from "@/components/CalculatorButton";
 import ButtonRow from "@/components/ButtonRow";
+import CalculatorButton from "@/components/CalculatorButton";
+import ThemedText from "@/components/ThemedText";
 import { Colors } from "@/constants/theme";
+import { globalStyles } from "@/styles/global-styles";
 
 const CalculatorApp = () => {
   return (
@@ -17,7 +17,6 @@ const CalculatorApp = () => {
       </View>
 
       {/* Filas de botones */}
-
       <View style={globalStyles.buttonsContainer}>
         <ButtonRow>
           <CalculatorButton
