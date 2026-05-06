@@ -148,10 +148,10 @@ const CalculatorApp = () => {
             }}
           />
           <CalculatorButton
-            label="÷"
+            label={Operator.Divide}
             backgroundColor={Colors.orange}
             onPress={() => {
-              buildFormula("÷");
+              buildFormula(Operator.Divide);
             }}
           />
         </ButtonRow>
@@ -176,10 +176,10 @@ const CalculatorApp = () => {
             }}
           />
           <CalculatorButton
-            label="x"
+            label={Operator.Multiply}
             backgroundColor={Colors.orange}
             onPress={() => {
-              buildFormula("x");
+              buildFormula(Operator.Multiply);
             }}
           />
         </ButtonRow>
@@ -204,10 +204,10 @@ const CalculatorApp = () => {
             }}
           />
           <CalculatorButton
-            label="-"
+            label={Operator.Subtract}
             backgroundColor={Colors.orange}
             onPress={() => {
-              buildFormula("-");
+              buildFormula(Operator.Subtract);
             }}
           />
         </ButtonRow>
@@ -232,10 +232,10 @@ const CalculatorApp = () => {
             }}
           />
           <CalculatorButton
-            label="+"
+            label={Operator.Add}
             backgroundColor={Colors.orange}
             onPress={() => {
-              buildFormula("+");
+              buildFormula(Operator.Add);
             }}
           />
         </ButtonRow>
