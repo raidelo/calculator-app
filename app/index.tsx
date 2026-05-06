@@ -11,13 +11,43 @@ import { globalStyles } from "@/styles/global-styles";
 const DEFAULT_FORMULA_VALUE = "0";
 const DEFAULT_RESULT_VALUE = "";
 
+enum Operator {
+  Add = "+",
+  Subtract = "-",
+  Multiply = "x",
+  Divide = "÷",
+}
+
+function isOperator(value: string): boolean {
+  switch (value) {
+    case Operator.Add:
+    case Operator.Subtract:
+    case Operator.Multiply:
+    case Operator.Divide:
+      return true;
+
+    default:
+      return false;
+  }
+}
+
+function getItemsButLast(text: string): string {
+  return text.slice(0, text.length - 1);
+}
+
+function getLastElement(text: string): string {
+  return text.slice(text.length - 1);
+}
+
 const CalculatorApp = () => {
   const [formula, setFormula] = useState(DEFAULT_FORMULA_VALUE);
   const [result, setResult] = useState(DEFAULT_RESULT_VALUE);
 
   const buildFormula = (key: string) => {
-    if (formula === DEFAULT_FORMULA_VALUE) {
+    if (formula === DEFAULT_FORMULA_VALUE && !isOperator(key)) {
       setFormula(key);
+    } else if (isOperator(getLastElement(formula)) && isOperator(key)) {
+      setFormula(getItemsButLast(formula) + key);
     } else {
       setFormula(formula + key);
     }
@@ -31,7 +61,7 @@ const CalculatorApp = () => {
     if (formula.length === 1) {
       setFormula(DEFAULT_FORMULA_VALUE);
     } else {
-      setFormula(formula.slice(0, formula.length - 1));
+      setFormula(getItemsButLast(formula));
     }
   };
 
