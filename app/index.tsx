@@ -31,6 +31,10 @@ function isOperator(value: string): boolean {
   }
 }
 
+function isDot(text: string): boolean {
+  return text === ".";
+}
+
 function getItemsButLast(text: string): string {
   return text.slice(0, text.length - 1);
 }
@@ -43,25 +47,60 @@ const CalculatorApp = () => {
   const [formula, setFormula] = useState(DEFAULT_FORMULA_VALUE);
   const [result, setResult] = useState(DEFAULT_RESULT_VALUE);
 
+  const [mayPlaceDot, setMayPlaceDot] = useState(true);
+  const [replaceDot, setReplaceDot] = useState(true);
+
   const buildFormula = (key: string) => {
-    if (formula === DEFAULT_FORMULA_VALUE && !isOperator(key)) {
-      setFormula(key);
-    } else if (isOperator(getLastElement(formula)) && isOperator(key)) {
-      setFormula(getItemsButLast(formula) + key);
+    if (formula === DEFAULT_FORMULA_VALUE) {
+      if (isOperator(key)) return;
+
+      let toSet = key;
+      if (isDot(key)) {
+        toSet = "0.";
+        setMayPlaceDot(false);
+      }
+
+      setReplaceDot(false);
+
+      setFormula(toSet);
     } else {
-      setFormula(formula + key);
+      let toSet = formula + key;
+
+      if (isOperator(key)) {
+        setMayPlaceDot(true);
+        setReplaceDot(true);
+
+        if (isOperator(getLastElement(formula))) {
+          toSet = getItemsButLast(formula) + key;
+        } else if (isDot(getLastElement(formula))) {
+          toSet = formula + "0" + key;
+        }
+      } else if (isDot(key)) {
+        if (!mayPlaceDot) return;
+
+        if (replaceDot) toSet = formula + "0.";
+        setMayPlaceDot(false);
+        setReplaceDot(false);
+      }
+
+      setFormula(toSet);
     }
   };
 
   const clearFormula = () => {
     setFormula(DEFAULT_FORMULA_VALUE);
     setResult(DEFAULT_RESULT_VALUE);
+    setMayPlaceDot(true);
+    setReplaceDot(true);
   };
 
   const deleteLastEntry = () => {
     if (formula.length === 1) {
-      setFormula(DEFAULT_FORMULA_VALUE);
+      clearFormula();
     } else {
+      let elementToDelete = getLastElement(formula);
+      if (isDot(elementToDelete)) setMayPlaceDot(true);
+
       setFormula(getItemsButLast(formula));
     }
   };
@@ -70,6 +109,8 @@ const CalculatorApp = () => {
     if (result !== DEFAULT_RESULT_VALUE) {
       setFormula(result);
       setResult(DEFAULT_RESULT_VALUE);
+      setMayPlaceDot(true);
+      setReplaceDot(false);
     }
   };
 
