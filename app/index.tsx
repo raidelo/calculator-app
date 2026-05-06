@@ -55,6 +55,7 @@ const CalculatorApp = () => {
 
   const clearFormula = () => {
     setFormula(DEFAULT_FORMULA_VALUE);
+    setResult(DEFAULT_RESULT_VALUE);
   };
 
   const deleteLastEntry = () => {
