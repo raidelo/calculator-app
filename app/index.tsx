@@ -14,7 +14,7 @@ const DEFAULT_RESULT_VALUE = "";
 enum Operator {
   Add = "+",
   Subtract = "-",
-  Multiply = "x",
+  Multiply = "×",
   Divide = "÷",
 }
 
