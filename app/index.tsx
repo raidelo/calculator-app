@@ -18,6 +18,26 @@ enum Operator {
   Divide = "÷",
 }
 
+function isAtInit(text: string): boolean {
+  return text === DEFAULT_FORMULA_VALUE;
+}
+
+function isAfterDigit(text: string): boolean {
+  return isDigit(getLastElement(text));
+}
+
+function isAfterOperator(text: string): boolean {
+  return isOperator(getLastElement(text));
+}
+
+function isAfterDot(text: string): boolean {
+  return isDot(getLastElement(text));
+}
+
+function isDigit(text: string): boolean {
+  return /^\d$/.test(text);
+}
+
 function isOperator(value: string): boolean {
   switch (value) {
     case Operator.Add:
@@ -48,50 +68,46 @@ const CalculatorApp = () => {
   const [result, setResult] = useState(DEFAULT_RESULT_VALUE);
 
   const [mayPlaceDot, setMayPlaceDot] = useState(true);
-  const [replaceDot, setReplaceDot] = useState(true);
 
   const buildFormula = (key: string) => {
-    if (formula === DEFAULT_FORMULA_VALUE) {
-      if (isOperator(key)) return;
+    if (isDot(key)) setMayPlaceDot(false);
+    if (isOperator(key)) setMayPlaceDot(true);
 
-      let toSet = key;
-      if (isDot(key)) {
-        toSet = "0.";
-        setMayPlaceDot(false);
+    let toSet = "";
+
+    if (isAtInit(formula)) {
+      if (isOperator(key) && key !== Operator.Subtract) {
+        return;
       }
 
-      setReplaceDot(false);
+      toSet = key;
+    } else if (isAfterDigit(formula)) {
+      if (isDot(key) && !mayPlaceDot) {
+        return;
+      }
 
-      setFormula(toSet);
-    } else {
-      let toSet = formula + key;
-
+      toSet = formula + key;
+    } else if (isAfterOperator(formula)) {
       if (isOperator(key)) {
-        setMayPlaceDot(true);
-        setReplaceDot(true);
-
-        if (isOperator(getLastElement(formula))) {
-          toSet = getItemsButLast(formula) + key;
-        } else if (isDot(getLastElement(formula))) {
-          toSet = formula + "0" + key;
-        }
-      } else if (isDot(key)) {
-        if (!mayPlaceDot) return;
-
-        if (replaceDot) toSet = formula + "0.";
-        setMayPlaceDot(false);
-        setReplaceDot(false);
+        toSet = getItemsButLast(formula) + key;
+      } else {
+        toSet = formula + key;
+      }
+    } else if (isAfterDot(formula)) {
+      if (isDot(key)) {
+        return;
       }
 
-      setFormula(toSet);
+      toSet = formula + key;
     }
+
+    setFormula(toSet);
   };
 
   const clearFormula = () => {
     setFormula(DEFAULT_FORMULA_VALUE);
     setResult(DEFAULT_RESULT_VALUE);
     setMayPlaceDot(true);
-    setReplaceDot(true);
   };
 
   const deleteLastEntry = () => {
@@ -110,7 +126,6 @@ const CalculatorApp = () => {
       setFormula(result);
       setResult(DEFAULT_RESULT_VALUE);
       setMayPlaceDot(true);
-      setReplaceDot(false);
     }
   };
 
