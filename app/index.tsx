@@ -5,73 +5,24 @@ import { View } from "react-native";
 import ButtonRow from "@/components/ButtonRow";
 import CalculatorButton from "@/components/CalculatorButton";
 import ThemedText from "@/components/ThemedText";
+import {
+  DEFAULT_FORMULA_VALUE,
+  DEFAULT_RESULT_VALUE,
+} from "@/constants/textPanel";
 import { Colors } from "@/constants/theme";
 import { globalStyles } from "@/styles/global-styles";
-
-const DEFAULT_FORMULA_VALUE = "0";
-const DEFAULT_RESULT_VALUE = "";
-
-enum Operator {
-  Add = "+",
-  Subtract = "-",
-  Multiply = "×",
-  Divide = "÷",
-}
-
-function isAtInit(text: string): boolean {
-  return text === DEFAULT_FORMULA_VALUE;
-}
-
-function isAfterDigit(text: string): boolean {
-  return isDigit(getLastElement(text));
-}
-
-function isAfterOperator(text: string): boolean {
-  return isOperator(getLastElement(text));
-}
-
-function isAfterDot(text: string): boolean {
-  return isDot(getLastElement(text));
-}
-
-function isDigit(text: string): boolean {
-  return /^\d$/.test(text);
-}
-
-function isOperator(value: string): boolean {
-  switch (value) {
-    case Operator.Add:
-    case Operator.Subtract:
-    case Operator.Multiply:
-    case Operator.Divide:
-      return true;
-
-    default:
-      return false;
-  }
-}
-
-function isDot(text: string): boolean {
-  return text === ".";
-}
-
-function getItemsButLast(text: string): string {
-  return text.slice(0, text.length - 1);
-}
-
-function getLastElement(text: string): string {
-  return text.slice(text.length - 1);
-}
-
-function doesLastNumberHaveDecimals(text: string): boolean {
-  for (let index = text.length - 1; index >= 0; index--) {
-    const element = text.charAt(index);
-
-    if (isDot(element)) return true;
-    else if (isOperator(element)) return false;
-  }
-  return false;
-}
+import { Operator } from "@/types/operator";
+import {
+  doesLastNumberHaveDecimals,
+  getItemsButLast,
+  getLastElement,
+  isAfterDigit,
+  isAfterDot,
+  isAfterOperator,
+  isAtInit,
+  isDot,
+  isOperator,
+} from "@/utils/utils";
 
 const CalculatorApp = () => {
   const [formula, setFormula] = useState(DEFAULT_FORMULA_VALUE);
