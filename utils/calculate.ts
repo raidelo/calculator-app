@@ -1,7 +1,7 @@
 import { Operator } from "@/types/operator";
 import { Atom, Token } from "@/types/tokens";
 
-function operate(operator: Operator, left: Atom, right: Atom) {
+export function operate(operator: Operator, left: Atom, right: Atom) {
   switch (operator) {
     case Operator.Add:
       return left + right;
@@ -14,7 +14,7 @@ function operate(operator: Operator, left: Atom, right: Atom) {
   }
 }
 
-function tokenize(text: string): Array<Token> {
+export function tokenize(text: string): Array<Token> {
   let tokens = new Array<Token>();
 
   let current_atom: string = "";
@@ -24,16 +24,24 @@ function tokenize(text: string): Array<Token> {
 
     switch (element) {
       case Operator.Add:
+        tokens.push(parseFloat(current_atom));
         tokens.push(Operator.Add);
+        current_atom = "";
         continue;
       case Operator.Subtract:
+        tokens.push(parseFloat(current_atom));
         tokens.push(Operator.Subtract);
+        current_atom = "";
         continue;
       case Operator.Multiply:
+        tokens.push(parseFloat(current_atom));
         tokens.push(Operator.Multiply);
+        current_atom = "";
         continue;
       case Operator.Divide:
+        tokens.push(parseFloat(current_atom));
         tokens.push(Operator.Divide);
+        current_atom = "";
         continue;
     }
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { View } from "react-native";
 
@@ -12,6 +12,7 @@ import {
 import { Colors } from "@/constants/theme";
 import { globalStyles } from "@/styles/global-styles";
 import { Operator } from "@/types/operator";
+import { tokenize } from "@/utils/calculate";
 import {
   doesLastNumberHaveDecimals,
   getItemsButLast,
@@ -29,6 +30,11 @@ const CalculatorApp = () => {
   const [result, setResult] = useState(DEFAULT_RESULT_VALUE);
 
   const [mayPlaceDot, setMayPlaceDot] = useState(true);
+
+  useEffect(() => {
+    const tokens = tokenize(formula);
+    console.log(tokens);
+  }, [formula]);
 
   const buildFormula = (key: string) => {
     if (isDot(key)) setMayPlaceDot(false);
