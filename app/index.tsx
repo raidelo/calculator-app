@@ -63,6 +63,16 @@ function getLastElement(text: string): string {
   return text.slice(text.length - 1);
 }
 
+function doesLastNumberHaveDecimals(text: string): boolean {
+  for (let index = text.length - 1; index >= 0; index--) {
+    const element = text.charAt(index);
+
+    if (isDot(element)) return true;
+    else if (isOperator(element)) return false;
+  }
+  return false;
+}
+
 const CalculatorApp = () => {
   const [formula, setFormula] = useState(DEFAULT_FORMULA_VALUE);
   const [result, setResult] = useState(DEFAULT_RESULT_VALUE);
@@ -116,6 +126,16 @@ const CalculatorApp = () => {
     } else {
       let elementToDelete = getLastElement(formula);
       if (isDot(elementToDelete)) setMayPlaceDot(true);
+      else if (isOperator(elementToDelete)) {
+        const lastNumberHasDecimals = doesLastNumberHaveDecimals(
+          getItemsButLast(formula),
+        );
+        if (lastNumberHasDecimals) {
+          setMayPlaceDot(false);
+        } else {
+          setMayPlaceDot(true);
+        }
+      }
 
       setFormula(getItemsButLast(formula));
     }
