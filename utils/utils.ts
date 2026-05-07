@@ -55,3 +55,14 @@ export function doesLastNumberHaveDecimals(text: string): boolean {
   }
   return false;
 }
+
+export function getGlues(operator: Operator): [number, number] {
+  switch (operator) {
+    case Operator.Add:
+    case Operator.Subtract:
+      return [1, 2];
+    case Operator.Multiply:
+    case Operator.Divide:
+      return [3, 4];
+  }
+}
