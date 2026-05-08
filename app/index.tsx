@@ -12,7 +12,11 @@ import {
 import { Colors } from "@/constants/theme";
 import { globalStyles } from "@/styles/global-styles";
 import { Operator } from "@/types/operator";
-import { tokenize } from "@/utils/calculate";
+import {
+  resolveOperation,
+  tokenize,
+  tokensToOperation,
+} from "@/utils/calculate";
 import {
   doesLastNumberHaveDecimals,
   getItemsButLast,
@@ -32,8 +36,12 @@ const CalculatorApp = () => {
   const [mayPlaceDot, setMayPlaceDot] = useState(true);
 
   useEffect(() => {
+    if (formula === DEFAULT_FORMULA_VALUE) return;
+
     const tokens = tokenize(formula);
-    console.log(tokens);
+    const operation = tokensToOperation(tokens);
+    const resolution = resolveOperation(operation);
+    setResult(resolution.toString());
   }, [formula]);
 
   const buildFormula = (key: string) => {
