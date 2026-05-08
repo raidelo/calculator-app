@@ -96,3 +96,18 @@ function _tokensToOperation(
 
   return [left, index];
 }
+
+export function resolveOperation(operation: Operation | Atom): Atom {
+  if (typeof operation === "number") return operation;
+
+  if (typeof operation.left === "number" && typeof operation.right === "number")
+    return operate(operation.operator, operation.left, operation.right);
+
+  return resolveOperation(
+    new Operation(
+      operation.operator,
+      resolveOperation(operation.left),
+      resolveOperation(operation.right),
+    ),
+  );
+}
