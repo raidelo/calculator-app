@@ -1,5 +1,7 @@
+import { Operation } from "@/types/operation";
 import { Operator } from "@/types/operator";
 import { Atom, Token } from "@/types/tokens";
+import { getGlues } from "./utils";
 
 export function operate(operator: Operator, left: Atom, right: Atom) {
   switch (operator) {
@@ -51,4 +53,46 @@ export function tokenize(text: string): Array<Token> {
   tokens.push(parseFloat(current_atom));
 
   return tokens;
+}
+
+export function tokensToOperation(tokens: Token[]): Operation | Atom {
+  const [result, _] = _tokensToOperation(tokens, 0, 0);
+  return result;
+}
+
+function _tokensToOperation(
+  tokens: Token[],
+  index: number = 0,
+  lastOpRightGlue: number = 0,
+): [Operation | Atom, number] {
+  let left: Operation | Token = tokens[index];
+
+  if (typeof left !== "number") {
+    throw new Error("tokens[1] must be an atom (number)");
+  }
+
+  let right: Operation | Token;
+
+  index = index + 1;
+
+  while (index < tokens.length) {
+    let op: Token = tokens[index];
+
+    // an operator is a string
+    if (typeof op !== "string") {
+      break;
+    }
+
+    let [opLeftGlue, opRightGlue] = getGlues(op);
+
+    if (lastOpRightGlue > opLeftGlue) {
+      break;
+    }
+
+    [right, index] = _tokensToOperation(tokens, index + 1, opRightGlue);
+
+    left = new Operation(op, left, right);
+  }
+
+  return [left, index];
 }
