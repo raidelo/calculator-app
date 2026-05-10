@@ -103,7 +103,6 @@ export function useCalculator() {
   const equal = () => {
     if (result !== DEFAULT_RESULT_VALUE) {
       setFormula(result);
-      setResult(DEFAULT_RESULT_VALUE);
       setMayPlaceDot(true);
     }
   };
